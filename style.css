@@ -169,3 +169,44 @@ transition: 0.2s;
     background-color: rgb(65, 105, 199);
     border:  1px solid black;
   }
+
+
+
+  .keyboard__button__active{
+    width: 4.8%;
+    height: 15%;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+    background-color: rgb(65, 105, 199);
+    border:  1px solid black;
+  }
+
+  
+.keyboard__big-button__active {
+  width: 11.5%;
+  height: 15%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+  background-color: rgb(65, 105, 199);
+  border:  1px solid black;
+}
+
+
+.keyboard__medium-button__active{
+  width: 6.5%;
+  height: 15%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+  background-color: rgb(65, 105, 199);
+  border:  1px solid black;
+}
+
+
+.keyboard__space__active{
+  width: 42%;
+  height: 15%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+  background-color: rgb(65, 105, 199);
+  border:  1px solid black;
+}
