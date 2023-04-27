@@ -6,7 +6,7 @@ let firstRowUp=["~", "!","@","#","$","%","^","&","*","(",")","_","+"];
 let firstRowDown=["`", "1","2","3","4","5","6","7","8","9","0","-","="];
 let secondRow=["Q","W","E","R","T","Y","U","I","O","P","[","]","\\", "DEL"];
 let thirdRow=["A","S","D","F","G","H","J","K","L",";","'",];
-let fourRow=["/","Z","X","C","V","B","N","M",".",",","/","cn", "Shift"];
+let fourRow=["/","Z","X","C","V","B","N","M",".",",","/","\u25B2", "Shift"];
 
 let keyboard=document.createElement("div");
 keyboard.classList.add("keyboard");
@@ -58,6 +58,23 @@ function addButtons(){
   for(let i=0; i<13;i++){
     createButton(fourRow[i],60,i*(6.7)+14, "normal");
   }
+
+  createButton("Cntr",80,0, "medium");
+  createButton("Win",80,8.5, "normal");
+  createButton("Alt",80,15, "normal");
+
+  let button=document.createElement("div");
+    button.classList.add("keyboard__space");
+    button.style.top="80%";
+    button.style.left= "21.5%";
+    buttonField.appendChild(button);
+
+    createButton("Alt",80,66, "normal");
+    createButton("Cntr",80,72.5, "medium");
+
+    createButton("\u25C0",80,81, "normal");
+    createButton("\u25BC",80,88, "normal");
+    createButton("\u25B6",80,94.5, "normal");
 }
 
 
