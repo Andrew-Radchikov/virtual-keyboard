@@ -27,6 +27,8 @@ body {
 }
 
 .keyboard__comments {
+  padding: 10px;
+  font-size: 30px;
   width: 70.5%;
   margin: auto;
   height: 200px;

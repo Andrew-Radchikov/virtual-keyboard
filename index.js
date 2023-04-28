@@ -1,10 +1,15 @@
 let body=document.querySelector("body");
+let language;
+let pressKey=new Set();
 
 let firstRowUp=["~", "!","@","#","$","%","^","&","*","(",")","_","+"];
 let firstRowDown=["`", "1","2","3","4","5","6","7","8","9","0","-","="];
 let secondRow=["Q","W","E","R","T","Y","U","I","O","P","[","]","\\", "DEL"];
+let secondRowRu=["Й","Ц","У","К","Е","Н","Г","Ш","Щ","З","Х","Ъ","\\", "DEL"];
 let thirdRow=["A","S","D","F","G","H","J","K","L",";","'",];
-let fourRow=["/","Z","X","C","V","B","N","M",".",",","/","\u25B2", "Shift"];
+let thirdRowRu=["Ф","Ы","В","А","П","Р","О","Л","Д","Ж","Э",];
+let fourRow=["En","Z","X","C","V","B","N","M",".",",","/","\u25B2", "Shift"];
+let fourRowRu=["Ru","Я","Ч","С","М","И","Т","Ь","Б","Ю",".","\u25B2", "Shift"];
 
 let keyboard=document.createElement("div");
 keyboard.classList.add("keyboard");
@@ -25,6 +30,7 @@ keyboard.appendChild(field);
 
 let comments=document.createElement("div");
 comments.classList.add("keyboard__comments");
+comments.innerText="Comments:\nOperating system - Windows\nSwitch language - Cntr+Shift or Shift+Cntr"
 keyboard.appendChild(comments);
 
 
@@ -33,46 +39,108 @@ buttonField.classList.add("keyboard__button-field");
 keyboard.appendChild(buttonField);
 
 
-function addButtons(){
+
+//Local Storage for Name
+function setLocalStorage() {
+  localStorage.setItem('language', language);
+  
+}
+
+
+function getLocalStorage() {
+  
+  if(localStorage.getItem('language')) {
+      language = localStorage.getItem('language');
+    }
+    else{
+    language="En";
+    }
+    addButtons(language);
+
+    }
+  
+
+  
+window.addEventListener('load', getLocalStorage);
+window.addEventListener('beforeunload', setLocalStorage);  
+
+
+function addButtons(lang){
+
+// First row
+
   for(let i=0; i<13;i++){
     createDubbleButton(firstRowDown[i],firstRowUp[i],0,i*(6.7), "normal");
   }
   createButton("Backspace",0,13*(6.7), "big");
 
+// Second row
+
   createButton("Tab",20,0, "medium");
-  for(let i=0; i<12;i++){
-    createButton(secondRow[i],20,i*(6.6)+8.5, "normal");
+
+  if(lang=="En"){
+    for(let i=0; i<12;i++){
+      createButton(secondRow[i],20,i*(6.6)+8.5, "normal");
+    }
+   
   }
+  else{
+    for(let i=0; i<12;i++){
+      createButton(secondRowRu[i],20,i*(6.6)+8.5, "normal");
+    }
+  }
+
   createDubbleButton(secondRow[12],"/",20,13*(6.8)-0.7, "normal");
   createButton(secondRow[13],20,14*(6.8)-1, "normal");
+  
+
+// Third row
 
   createButton("Caps Lock",40,0, "big");
-  for(let i=0; i<11;i++){
-    createButton(thirdRow[i],40,i*(6.6)+14, "normal");
+  if(lang=="En"){
+    for(let i=0; i<11;i++){
+      createButton(thirdRow[i],40,i*(6.6)+14, "normal");
+    }
   }
+  else{
+    for(let i=0; i<11;i++){
+      createButton(thirdRowRu[i],40,i*(6.6)+14, "normal");
+    }
+  }
+
   createButton("Enter",40,11*(6.6)+14.5, "big");
 
+// Four row
+
   createButton("Shift",60,0, "big");
-  for(let i=0; i<13;i++){
-    createButton(fourRow[i],60,i*(6.7)+14, "normal");
+  if(lang=="En"){
+    for(let i=0; i<13;i++){
+      createButton(fourRow[i],60,i*(6.7)+14, "normal");
+    }
   }
+  else{
+    for(let i=0; i<13;i++){
+      createButton(fourRowRu[i],60,i*(6.7)+14, "normal");
+    }
+  }
+
+// Fifth row
 
   createButton("Cntr",80,0, "medium");
   createButton("Win",80,8.5, "normal");
   createButton("Alt",80,15, "normal");
 
   let button=document.createElement("div");
-    button.classList.add("keyboard__space");
-    button.style.top="80%";
-    button.style.left= "21.5%";
-    buttonField.appendChild(button);
+  button.classList.add("keyboard__space");
+  button.style.top="80%";
+  button.style.left= "21.5%";
+  buttonField.appendChild(button);
 
-    createButton("Alt",80,66, "normal");
-    createButton("Cntr",80,72.5, "medium");
-
-    createButton("\u25C0",80,81, "normal");
-    createButton("\u25BC",80,88, "normal");
-    createButton("\u25B6",80,94.5, "normal");
+  createButton("Alt",80,66, "normal");
+  createButton("Cntr",80,72.5, "medium");
+  createButton("\u25C0",80,81, "normal");
+  createButton("\u25BC",80,88, "normal");
+  createButton("\u25B6",80,94.5, "normal");
 }
 
 
@@ -88,6 +156,27 @@ function createButton(text, x,y,type){
     button.style.left= y+"%";
     button.innerText=text;
     buttonField.appendChild(button);
+}
+
+
+function deleteKeyboard(){
+    let normButton=document.querySelectorAll(".keyboard__button");
+  for (let i=0; i<normButton.length; i++){
+    buttonField.removeChild(normButton[i]);
+  }
+  let mediumButton=document.querySelectorAll(".keyboard__medium-button");
+  for (let i=0; i<mediumButton.length; i++){
+    buttonField.removeChild(mediumButton[i]);
+  }
+  let bigButton=document.querySelectorAll(".keyboard__big-button");
+  for (let i=0; i<bigButton.length; i++){
+    buttonField.removeChild(bigButton[i]);
+  }
+ 
+  buttonField.removeChild(document.querySelector(".keyboard__space"));
+
+
+
 }
 
 
@@ -109,7 +198,7 @@ button.appendChild(button2);
 }
 
 
-addButtons();
+
 
 // Show button
 
@@ -301,14 +390,127 @@ function removeSpetialButton(name, location){
 }
 
 
+function showSecondLanguageKey(code){
+ switch(code){
+  case "KeyQ": showPressButton("Q");showPressButton("Й");break;
+  case "KeyW": showPressButton("W");showPressButton("Ц");break;
+  case "KeyE": showPressButton("E");showPressButton("У");break;
+  case "KeyR": showPressButton("R");showPressButton("К");break;
+  case "KeyT": showPressButton("T");showPressButton("Е");break;
+  case "KeyY": showPressButton("Y");showPressButton("Н");break;
+  case "KeyU": showPressButton("U");showPressButton("Г");break;
+  case "KeyI": showPressButton("I");showPressButton("Ш");break;
+  case "KeyO": showPressButton("O");showPressButton("Ш");break;
+  case "KeyP": showPressButton("P");showPressButton("З");break;
+  case "BracketLeft": showPressButton("[");showPressButton("Х");break;
+  case "BracketRight": showPressButton("]");showPressButton("Ъ");break;
+
+  case "KeyA": showPressButton("A");showPressButton("Ф");break;
+  case "KeyS": showPressButton("S");showPressButton("Ы");break;
+  case "KeyD": showPressButton("D");showPressButton("В");break;
+  case "KeyF": showPressButton("F");showPressButton("А");break;
+  case "KeyG": showPressButton("G");showPressButton("П");break;
+  case "KeyH": showPressButton("H");showPressButton("Р");break;
+  case "KeyJ": showPressButton("J");showPressButton("О");break;
+  case "KeyK": showPressButton("K");showPressButton("Л");break;
+  case "KeyL": showPressButton("L");showPressButton("Д");break;
+  case "Semicolon": showPressButton(";");showPressButton("Ж");break;
+  case "Quote": showPressButton("'");showPressButton("Э");break;
+
+  case "KeyZ": showPressButton("Z");showPressButton("Я");break;
+  case "KeyX": showPressButton("X");showPressButton("Ч");break;
+  case "KeyC": showPressButton("C");showPressButton("С");break;
+  case "KeyV": showPressButton("V");showPressButton("М");break;
+  case "KeyB": showPressButton("B");showPressButton("И");break;
+  case "KeyN": showPressButton("N");showPressButton("Т");break;
+  case "KeyM": showPressButton("M");showPressButton("Ь");break;
+  case "Comma": showPressButton(".");showPressButton("Б");break;
+  case "Period": showPressButton(",");showPressButton("Ю");break;
+  case "Slash": showPressButton("/");showPressButton(".");break;
+  case "Tab": showPressButton("Tab");break;
+
+  default: {
+
+  }
+
+
+}
+
+
+
+};
+
+
+function removeSecondLanguageKey(code){
+  switch(code){
+   case "KeyQ": removePressButton("Q");removePressButton("Й");break;
+   case "KeyW": removePressButton("W");removePressButton("Ц");break;
+   case "KeyE": removePressButton("E");removePressButton("У");break;
+   case "KeyR": removePressButton("R");removePressButton("К");break;
+   case "KeyT": removePressButton("T");removePressButton("Е");break;
+   case "KeyY": removePressButton("Y");removePressButton("Н");break;
+   case "KeyU": removePressButton("U");removePressButton("Г");break;
+   case "KeyI": removePressButton("I");removePressButton("Ш");break;
+   case "KeyO": removePressButton("O");removePressButton("Ш");break;
+   case "KeyP": removePressButton("P");removePressButton("З");break;
+   case "BracketLeft": removePressButton("[");removePressButton("Х");break;
+   case "BracketRight": removePressButton("]");removePressButton("Ъ");break;
+ 
+   case "KeyA": removePressButton("A");removePressButton("Ф");break;
+   case "KeyS": removePressButton("S");removePressButton("Ы");break;
+   case "KeyD": removePressButton("D");removePressButton("В");break;
+   case "KeyF": removePressButton("F");removePressButton("А");break;
+   case "KeyG": removePressButton("G");removePressButton("П");break;
+   case "KeyH": removePressButton("H");removePressButton("Р");break;
+   case "KeyJ": removePressButton("J");removePressButton("О");break;
+   case "KeyK": removePressButton("K");removePressButton("Л");break;
+   case "KeyL": removePressButton("L");removePressButton("Д");break;
+   case "Semicolon": removePressButton(";");removePressButton("Ж");break;
+   case "Quote": removePressButton("'");removePressButton("Э");break;
+ 
+   case "KeyZ": removePressButton("Z");removePressButton("Я");break;
+   case "KeyX": removePressButton("X");removePressButton("Ч");break;
+   case "KeyC": removePressButton("C");removePressButton("С");break;
+   case "KeyV": removePressButton("V");removePressButton("М");break;
+   case "KeyB": removePressButton("B");removePressButton("И");break;
+   case "KeyN": removePressButton("N");removePressButton("Т");break;
+   case "KeyM": removePressButton("M");removePressButton("Ь");break;
+   case "Comma": removePressButton(".");removePressButton("Б");break;
+   case "Period": removePressButton(",");removePressButton("Ю");break;
+   case "Slash": removePressButton("/");removePressButton(".");break;
+   case "Tab": removePressButton("Tab");break;
+   
+ 
+   default: {
+ 
+   }
+ 
+ 
+ }
+ 
+ 
+ 
+ };
+
+
+
+
 
 window.addEventListener("keydown", (event)=>{
+  if(event.code == "AltLeft" || event.code == "AltRight" || event.key == "Meta" || event.code == "Tab" ){ 
+    event.preventDefault();
+
+  }
+
+
+  // || event.code == "RightAlt" || event.code == "Tab"){
+
 
   if(["Shift", "Alt", "Control"].includes(event.key)){
       switch(event.key){
-        case "Shift":showSpetialButton("Shift",event.location);break;
+        case "Shift":showSpetialButton("Shift",event.location);pressKey=pressKey.add("Shift");break;
         case "Alt":showSpetialButton("Alt",event.location);break;
-        case "Control":showSpetialButton("Cntr",event.location);break;
+        case "Control":showSpetialButton("Cntr",event.location);pressKey=pressKey.add("Control");break;
       }
   }
   else{
@@ -344,21 +546,40 @@ window.addEventListener("keydown", (event)=>{
       case "Delete":showPressButton("DEL");break;
       case "\\":showPressButton("\\/");break;
       case "CapsLock":showPressButton("Caps Lock");break;
-      case " ":showPressButton(" ");break;
-      case "Meta":showPressButton("Win");break;
+      case " ":showPressButton(" "); break;
+      case "Meta":showPressButton("Win"); break;
       case "ArrowLeft":showPressButton("\u25C0");break;
       case "ArrowUp":showPressButton("\u25B2");break;
       case "ArrowDown":showPressButton("\u25BC");break;
       case "ArrowRight":showPressButton("\u25B6");break;
 
       
+
+      
       default:{
-        showPressButton(event.key);
-        showPressButton(event.key.toUpperCase());
+        showSecondLanguageKey(event.code);
+        // showPressButton(event.key);
+        // showPressButton(event.key.toUpperCase());
         break;
       }
     }
 
+
+
+  }
+// console.log(event)
+ 
+  if(pressKey.has("Control") && pressKey.has("Shift")){
+    if(language=="En"){
+      language="Ru";
+    
+    }
+    else{
+      language="En";
+    }
+    pressKey.delete("Shift");
+    deleteKeyboard();
+    addButtons(language);
   }
 })
 
@@ -368,9 +589,9 @@ window.addEventListener("keyup", (event)=>{
 
   if(["Shift", "Alt", "Control"].includes(event.key)){
       switch(event.key){
-        case "Shift":removeSpetialButton("Shift",event.location);break;
+        case "Shift":removeSpetialButton("Shift",event.location);pressKey.delete("Shift");break;
         case "Alt":removeSpetialButton("Alt",event.location);break;
-        case "Control":removeSpetialButton("Cntr",event.location);break;
+        case "Control":removeSpetialButton("Cntr",event.location);pressKey.delete("Control");break;
       }
   }
   else{
@@ -415,14 +636,13 @@ window.addEventListener("keyup", (event)=>{
 
       
       default:{
-        removePressButton(event.key);
-        removePressButton(event.key.toUpperCase());
+        removeSecondLanguageKey(event.code);
         break;
       }
     }
 
   }
-  console.log(event.key)
+
 })
 
 // console.log(field.value)
