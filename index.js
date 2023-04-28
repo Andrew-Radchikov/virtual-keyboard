@@ -1,6 +1,8 @@
 let body=document.querySelector("body");
 let language;
 let pressKey=new Set();
+let textFocus=0;
+let caps=0;
 
 let firstRowUp=["~", "!","@","#","$","%","^","&","*","(",")","_","+"];
 let firstRowDown=["`", "1","2","3","4","5","6","7","8","9","0","-","="];
@@ -499,11 +501,14 @@ function removeSecondLanguageKey(code){
 window.addEventListener("keydown", (event)=>{
   if(event.code == "AltLeft" || event.code == "AltRight" || event.key == "Meta" || event.code == "Tab" ){ 
     event.preventDefault();
-
+   
+  
+    if(event.code == "Tab"){
+      field.value = field.value + "\t";
+    } 
   }
-
-
-  // || event.code == "RightAlt" || event.code == "Tab"){
+ 
+ 
 
 
   if(["Shift", "Alt", "Control"].includes(event.key)){
@@ -567,6 +572,13 @@ window.addEventListener("keydown", (event)=>{
 
 
   }
+
+
+  if(textFocus == 0){
+    
+    addSymbolTo(event.key);
+  }
+
 // console.log(event)
  
   if(pressKey.has("Control") && pressKey.has("Shift")){
@@ -581,6 +593,8 @@ window.addEventListener("keydown", (event)=>{
     deleteKeyboard();
     addButtons(language);
   }
+
+
 })
 
 
@@ -626,7 +640,7 @@ window.addEventListener("keyup", (event)=>{
       case "Backspace":removePressButton("Backspace");break;
       case "Delete":removePressButton("DEL");break;
       case "\\":removePressButton("\\/");break;
-      case "CapsLock":removePressButton("Caps Lock");break;
+      case "CapsLock":removePressButton("Caps Lock");caps=(caps+1)%2;break;
       case " ":removePressButton(" ");break;
       case "Meta":removePressButton("Win");break;
       case "ArrowLeft":removePressButton("\u25C0");break;
@@ -644,6 +658,53 @@ window.addEventListener("keyup", (event)=>{
   }
 
 })
+
+field.addEventListener("focusin", () => textFocus=1);
+field.addEventListener("focusout", () => textFocus=0);
+
+
+
+function addSymbolTo(symbol){
+  switch(symbol){
+    case "Shift":break;
+    case "Backspace":field.value = field.value.slice(0,field.value.length-1);break;
+    case "Tab":break;
+    case "CapsLock":break;
+    case "Enter":field.value = field.value+ "\n";break;
+    case "Control":break;
+    case "Meta":break;
+    case "Alt":break;
+    case "NumLock":break;
+    case "Delete":break;
+    case "End":break;
+    case "Insert":break;
+    case "PageDown":break;
+    case "PageUp":break;
+    case "ArrowLeft":field.value = field.value+ "\u25C0";break;
+    case "ArrowUp":field.value = field.value+ "\u25B2";break;
+    case "ArrowDown":field.value = field.value+ "\u25BC";break;
+    case "ArrowRight":field.value = field.value+ "\u25B6";break;
+    
+    
+
+    default:{
+      field.value = field.value + symbol;
+    }
+    }
+  }
+
+
+
+  buttonField.addEventListener("click",(event)=>{
+
+console.log(field.selectionStart)
+
+  })
+
+  // createButton("\u25C0",80,81, "normal");
+  // createButton("",80,88, "normal");
+  // createButton("\u25B6",80,94.5, "normal");
+
 
 // console.log(field.value)
 // field.innerText=field.value+event.key;
