@@ -32,7 +32,7 @@ keyboard.appendChild(field);
 
 let comments=document.createElement("div");
 comments.classList.add("keyboard__comments");
-comments.innerText="Comments:\nOperating system - Windows\nSwitch language - Cntr+Shift or Shift+Cntr"
+comments.innerText="Comments:\nOperating system - Windows\nSwitch language - Cntr+Shift or Shift+Cntr (left buttons)"
 keyboard.appendChild(comments);
 
 
@@ -65,6 +65,10 @@ function getLocalStorage() {
   
 window.addEventListener('load', getLocalStorage);
 window.addEventListener('beforeunload', setLocalStorage);  
+
+
+
+
 
 
 function addButtons(lang){
@@ -614,9 +618,15 @@ window.addEventListener("keydown", (event)=>{
     else{
       language="En";
     }
+
+
     pressKey.delete("Shift");
     deleteKeyboard();
     addButtons(language);
+    showSpetialButton("Shift", 1);
+    showSpetialButton("Cntr", 1)
+
+
   }
 
 
@@ -784,6 +794,7 @@ function delText(){
         case "Cntr":break;
         case "Alt":break;
         case "":putText(" ");break;
+        case "Win":break;
         case "Caps Lock":caps=(caps+1) % 2; break;
 
 
