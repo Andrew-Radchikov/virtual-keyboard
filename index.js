@@ -426,9 +426,19 @@ function showSecondLanguageKey(code){
   case "KeyB": showPressButton("B");showPressButton("И");break;
   case "KeyN": showPressButton("N");showPressButton("Т");break;
   case "KeyM": showPressButton("M");showPressButton("Ь");break;
-  case "Comma": showPressButton(".");showPressButton("Б");break;
+  case "Comma": {
+      if(language== "En"){
+        showPressButton(".")
+      } 
+      else{showPressButton("Б");}
+  };break;
   case "Period": showPressButton(",");showPressButton("Ю");break;
-  case "Slash": showPressButton("/");showPressButton(".");break;
+  case "Slash": {
+    if(language== "En"){
+      showPressButton("/")
+    } 
+    else{showPressButton(".");}
+    };break;
   case "Tab": showPressButton("Tab");break;
 
   default: {
@@ -477,9 +487,21 @@ function removeSecondLanguageKey(code){
    case "KeyB": removePressButton("B");removePressButton("И");break;
    case "KeyN": removePressButton("N");removePressButton("Т");break;
    case "KeyM": removePressButton("M");removePressButton("Ь");break;
-   case "Comma": removePressButton(".");removePressButton("Б");break;
+   case "Comma": {
+    if (language== "En"){
+      removePressButton(".");
+    } 
+    else{
+      removePressButton("Б");
+    }}
+    break;
    case "Period": removePressButton(",");removePressButton("Ю");break;
-   case "Slash": removePressButton("/");removePressButton(".");break;
+   case "Slash": {
+    if(language== "En"){
+      removePressButton("/")
+    } 
+    else{removePressButton(".");}
+    };break;
    case "Tab": removePressButton("Tab");break;
    
  
@@ -499,13 +521,14 @@ function removeSecondLanguageKey(code){
 
 
 window.addEventListener("keydown", (event)=>{
-  if(event.code == "AltLeft" || event.code == "AltRight" || event.key == "Meta" || event.code == "Tab" ){ 
+  if(event.code == "AltLeft" || event.code == "AltRight" || event.key == "Meta" || event.code == "Tab" || event.code == "Control"){ 
     event.preventDefault();
-   
+     
   
     if(event.code == "Tab"){
       field.value = field.value + "\t";
     } 
+   
   }
  
  
@@ -520,6 +543,7 @@ window.addEventListener("keydown", (event)=>{
   }
   else{
 
+  
     switch(event.key){
       case "`":showPressButton("`~");break;
       case "1":showPressButton("1!");break;
@@ -547,6 +571,7 @@ window.addEventListener("keydown", (event)=>{
       case ")":showPressButton("0)");break;
       case "_":showPressButton("-_");break;
       case "+":showPressButton("=+");break;
+      case "Enter":showPressButton("Enter");break;
       case "Backspace":showPressButton("Backspace");break;
       case "Delete":showPressButton("DEL");break;
       case "\\":showPressButton("\\/");break;
@@ -595,6 +620,7 @@ window.addEventListener("keydown", (event)=>{
   }
 
 
+ 
 })
 
 
@@ -637,6 +663,7 @@ window.addEventListener("keyup", (event)=>{
       case ")":removePressButton("0)");break;
       case "_":removePressButton("-_");break;
       case "+":removePressButton("=+");break;
+      case "Enter":removePressButton("Enter");break;
       case "Backspace":removePressButton("Backspace");break;
       case "Delete":removePressButton("DEL");break;
       case "\\":removePressButton("\\/");break;
@@ -659,9 +686,18 @@ window.addEventListener("keyup", (event)=>{
 
 })
 
+
+
+
 field.addEventListener("focusin", () => textFocus=1);
 field.addEventListener("focusout", () => textFocus=0);
-
+field.addEventListener("blur",(event)=>{
+  event.preventDefault();
+  removePressButton("Cntr");
+  removePressButton("Alt");
+  removePressButton("Win");
+  removePressButton("D");
+})
 
 
 function addSymbolTo(symbol){
@@ -695,18 +731,80 @@ function addSymbolTo(symbol){
 
 
 
-  buttonField.addEventListener("click",(event)=>{
+function putText(text){
+  let x=field.selectionStart;
+  field.value = field.value.slice(0,field.selectionStart) + text + field.value.slice(field.selectionStart,field.value.length);
+  field.selectionStart=x+1;
+  field.selectionEnd=x+1;
+}
 
-console.log(field.selectionStart)
+function backText(){
+  let x=field.selectionStart;
+  field.value = field.value.slice(0,field.selectionStart-1) + field.value.slice(field.selectionStart,field.value.length);
+  field.selectionStart=x-1;
+  field.selectionEnd=x-1;
+}
+
+function delText(){
+  let x=field.selectionStart;
+  field.value = field.value.slice(0,field.selectionStart) + field.value.slice(field.selectionStart+1,field.value.length);
+  field.selectionStart=x;
+  field.selectionEnd=x;
+}
+
+
+  buttonField.addEventListener("mousedown",(event)=>{
+
+    event.preventDefault();
+  if(!event.target.classList.contains("keyboard__button-field")){
+    field.focus();
+
+    // console.log(event.target.innerText)
+    let situation=0;
+    if(caps == 1){
+      situation+=1;
+    }
+    if(pressKey.has("Shift")){
+      situation += 1;
+    }
+    situation=situation % 2;
+   
+
+    
+
+
+      switch(event.target.innerText){
+        case "Ru":break;
+        case "En":break;
+        case "Backspace": backText();break;
+        case "Tab": putText("\t");
+        case "DEL":delText(); break;
+        case "Enter":putText("\n"); break;
+        case "Shift":break;
+        case "Cntr":break;
+        case "Alt":break;
+        case "":putText(" ");break;
+        case "Caps Lock":caps=(caps+1) % 2; break;
+
+
+        default:{
+          if(situation == 0){
+          putText(event.target.innerText[0].toLowerCase());
+          }
+          else{
+            if(event.target.innerText.length>1){
+              putText(event.target.innerText[2].toUpperCase());
+            }
+            else{
+              putText(event.target.innerText[0].toUpperCase());
+            }
+          }
+        }
+      }
+     
+  }
+
+  
+
 
   })
-
-  // createButton("\u25C0",80,81, "normal");
-  // createButton("",80,88, "normal");
-  // createButton("\u25B6",80,94.5, "normal");
-
-
-// console.log(field.value)
-// field.innerText=field.value+event.key;
-//    textArea.innerHTML=textArea.value+event.key;
-//    console.log(event);
