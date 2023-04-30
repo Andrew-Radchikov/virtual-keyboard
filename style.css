@@ -1,0 +1,215 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.keyboard {
+  margin: auto;
+  max-width: 1440px;
+}
+
+.keyboard__name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width: 320px;
+  height: 150px;
+}
+
+.keyboard__text-field {
+  width: 70%;
+  resize: none;
+  margin-left: 15%;
+  margin-right: 15%;
+  min-height: 200px;
+  background-color: rgba(133, 132, 132, 0.1);
+}
+
+.keyboard__comments {
+  padding: 10px;
+  font-size: 30px;
+  width: 70.5%;
+  margin: auto;
+  user-select: none;
+  height: 200px;
+}
+
+.keyboard__button-field {
+  position: relative;
+  width: 70.5%;
+  margin: auto;
+  height: 300px;
+  
+}
+
+.keyboard__button {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5%;
+  height: 16%;
+  border-radius: 5px;
+  box-shadow: 3px 3px 1px 4px rgb(157, 152, 152);
+  background-color: rgb(105, 104, 107);
+  border:  1px solid black;
+  transition: 0.2s;
+  user-select: none;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  
+}
+
+.button__include{
+position: absolute;
+width: 30%;
+height: 30%;
+top:0;
+left:5%;
+color: white;
+font-size: 15px;
+font-weight: 400;
+transition: 0.2s;
+}
+
+.keyboard__big-button {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12%;
+  height: 16%;
+  border-radius: 5px;
+  box-shadow: 3px 3px 1px 4px rgb(157, 152, 152);
+  background-color: rgb(105, 104, 107);
+  border:  1px solid black;
+  transition: 0.2s;
+  user-select: none;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+.keyboard__medium-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 7%;
+    height: 16%;
+    border-radius: 5px;
+    box-shadow: 3px 3px 1px 4px rgb(157, 152, 152);
+    background-color: rgb(105, 104, 107);
+    border:  1px solid black;
+    transition: 0.2s;
+    user-select: none;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  
+.keyboard__space {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 43%;
+  height: 16%;
+  border-radius: 5px;
+  box-shadow: 3px 3px 1px 4px rgb(157, 152, 152);
+  background-color: rgb(105, 104, 107);
+  border:  1px solid black;
+  transition: 0.2s;
+  user-select: none;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+.keyboard__button:active{
+  width: 4.8%;
+  height: 15%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+  background-color: rgb(65, 105, 199);
+  border:  1px solid black;
+}
+
+.keyboard__button:active .button__include{
+    font-size: 13px;
+   
+  }
+
+.keyboard__big-button:active {
+  width: 11.5%;
+  height: 15%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+  background-color: rgb(65, 105, 199);
+  border:  1px solid black;
+}
+
+
+.keyboard__medium-button:active{
+    width: 6.5%;
+    height: 15%;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+    background-color: rgb(65, 105, 199);
+    border:  1px solid black;
+  }
+
+  .keyboard__space:active{
+    width: 42%;
+    height: 15%;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+    background-color: rgb(65, 105, 199);
+    border:  1px solid black;
+  }
+
+
+
+  .keyboard__button__active{
+    width: 4.8%;
+    height: 15%;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+    background-color: rgb(65, 105, 199);
+    border:  1px solid black;
+  }
+
+  
+.keyboard__big-button__active {
+  width: 11.5%;
+  height: 15%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+  background-color: rgb(65, 105, 199);
+  border:  1px solid black;
+}
+
+
+.keyboard__medium-button__active{
+  width: 6.5%;
+  height: 15%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+  background-color: rgb(65, 105, 199);
+  border:  1px solid black;
+}
+
+
+.keyboard__space__active{
+  width: 42%;
+  height: 15%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 2px rgb(157, 152, 152);
+  background-color: rgb(65, 105, 199);
+  border:  1px solid black;
+}
